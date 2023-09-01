@@ -17,7 +17,7 @@ import pos.layerd.service.customer.CustomerService;
  */
 public class CustomerServiceImpl implements CustomerService{
     
-    CustomerDao customerDao = (CustomerDao) DaoFactory.getinstance().getDao(DaoFactory.DaoType.CUSTOMER);
+    CustomerDao customerDao = (CustomerDao) DaoFactory.getInstance().getDao(DaoFactory.DaoType.CUSTOMER);
 
     public String addCustomer(CustomerDto dto) throws Exception {
         CustomerEntity ce = new CustomerEntity(dto.getId(), dto.getTitle(), dto.getName(), dto.getDob(), dto.getSalary(), dto.getAddress(), dto.getCity(), dto.getProvince(), dto.getZip());

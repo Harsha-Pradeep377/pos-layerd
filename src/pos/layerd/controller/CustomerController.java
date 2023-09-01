@@ -14,7 +14,7 @@ import pos.layerd.service.customer.CustomerService;
  * @author Harsha
  */
 public class CustomerController {
-    CustomerService customerService = (CustomerService) ServiceFactory.getinstance().getService(ServiceFactory.ServiceType.CUSTOMER);
+    CustomerService customerService = (CustomerService) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.CUSTOMER);
     public String addCustomer(CustomerDto customerDto) throws Exception {
        return customerService.addCustomer(customerDto);
     }

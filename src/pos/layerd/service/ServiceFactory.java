@@ -5,6 +5,7 @@
 package pos.layerd.service;
 
 import pos.layerd.service.customer.impl.CustomerServiceImpl;
+import pos.layerd.service.customer.impl.ItemServiceImpl;
 
 /**
  *
@@ -16,7 +17,7 @@ public class ServiceFactory {
     
     private ServiceFactory(){}
     
-    public static ServiceFactory getinstance(){
+    public static ServiceFactory getInstance(){
         if(serviceFactory == null){
             serviceFactory = new ServiceFactory();
         }
@@ -26,12 +27,14 @@ public class ServiceFactory {
         switch (type) {
             case CUSTOMER:
                 return new CustomerServiceImpl();
+            case ITEM:
+                return new ItemServiceImpl();    
             default:
                 return null;
         }
     }
     public enum ServiceType{
-        CUSTOMER
+        CUSTOMER, ITEM
     }
     
 }

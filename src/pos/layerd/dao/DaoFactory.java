@@ -5,6 +5,7 @@
 package pos.layerd.dao;
 
 import pos.layerd.dao.customer.impl.CustomerDaoImpl;
+import pos.layerd.dao.customer.impl.ItemDaoImpl;
 /**
  *
  * @author Harsha
@@ -14,7 +15,7 @@ public class DaoFactory {
     
     private DaoFactory(){}
     
-    public static DaoFactory getinstance(){
+    public static DaoFactory getInstance(){
         if(daoFactory == null){
             daoFactory = new DaoFactory();
         }
@@ -24,12 +25,14 @@ public class DaoFactory {
         switch (type) {
             case CUSTOMER:
                 return new CustomerDaoImpl();
+            case ITEM:
+                return new ItemDaoImpl();
             default:
                 return null;
         }
     }
     public enum DaoType{
-        CUSTOMER
+        CUSTOMER, ITEM 
     }
     
 }

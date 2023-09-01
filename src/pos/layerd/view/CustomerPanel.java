@@ -4,9 +4,12 @@
  */
 package pos.layerd.view;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pos.layerd.controller.CustomerController;
 import pos.layerd.dto.CustomerDto;
 
@@ -22,6 +25,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     public CustomerPanel() {
         customerController = new CustomerController();
         initComponents();
+        loadAllCustomers();
     }
 
     /**
@@ -236,7 +240,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         customerPanel.setLayout(customerPanelLayout);
         customerPanelLayout.setHorizontalGroup(
             customerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 613, Short.MAX_VALUE)
             .addGroup(customerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(customerPanelLayout.createSequentialGroup()
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
@@ -248,8 +252,8 @@ public class CustomerPanel extends javax.swing.JPanel {
             .addGroup(customerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customerPanelLayout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(48, 48, 48)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(59, 59, 59)))
         );
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
@@ -338,6 +342,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             String resp = customerController.addCustomer(customerDto);
             JOptionPane.showMessageDialog(this, resp);
             clear();
+            loadAllCustomers();
         } catch (Exception ex) {
             Logger.getLogger(CustomerPanel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -353,5 +358,28 @@ public class CustomerPanel extends javax.swing.JPanel {
         custcityText.setText("");
         custprovinceText.setText("");
         custzipText.setText("");
+    }
+     private void loadAllCustomers() {
+
+        try {
+            String[] collumns = {"Id", "Name", "Address", "Salary", "Postal Code"};
+            DefaultTableModel dtm = new DefaultTableModel(collumns, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            customerTable.setModel(dtm);
+
+            ArrayList<CustomerDto> customers = customerController.getAllCustomers();
+
+            for (CustomerDto customer : customers) {
+                Object[] rowData = {customer.getId(), customer.getTitle() + " " + customer.getName(), customer.getAddress() + ", " + customer.getCity(), customer.getSalary(), customer.getZip()};
+                dtm.addRow(rowData);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerPanel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 }

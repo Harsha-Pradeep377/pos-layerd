@@ -4,9 +4,9 @@
  */
 package pos.layerd.controller;
 
+import java.util.ArrayList;
 import pos.layerd.dto.CustomerDto;
 import pos.layerd.service.ServiceFactory;
-import static pos.layerd.service.ServiceFactory.ServiceType.CUSTOMER;
 import pos.layerd.service.customer.CustomerService;
 
 /**
@@ -14,9 +14,12 @@ import pos.layerd.service.customer.CustomerService;
  * @author Harsha
  */
 public class CustomerController {
-    CustomerService customerService = (CustomerService) ServiceFactory.getinstance().getService(CUSTOMER);
+    CustomerService customerService = (CustomerService) ServiceFactory.getinstance().getService(ServiceFactory.ServiceType.CUSTOMER);
     public String addCustomer(CustomerDto customerDto) throws Exception {
        return customerService.addCustomer(customerDto);
+    }
+     public ArrayList<CustomerDto> getAllCustomers() throws Exception {
+        return customerService.getAllCustomer();
     }
     
 }

@@ -12,9 +12,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pos.layerd.controller.CustomerController;
 import pos.layerd.controller.ItemController;
+import pos.layerd.controller.OrderController;
 import pos.layerd.dto.CustomerDto;
 import pos.layerd.dto.ItemDto;
 import pos.layerd.dto.OrderDetailDto;
+import pos.layerd.dto.OrderDto;
 
 /**
  *
@@ -25,12 +27,14 @@ public class OrderPanel extends javax.swing.JPanel {
     private List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
     private CustomerController customerController;
     private ItemController itemController;
+    private OrderController orderController;
     /**
      * Creates new form OrderPanel
      */
     public OrderPanel() {
         customerController = new CustomerController();
         itemController = new ItemController();
+        orderController = new OrderController();
         initComponents();
         loadTable();
     }
@@ -281,7 +285,7 @@ public class OrderPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_searchitemButton1ActionPerformed
 
     private void placeorderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeorderButtonActionPerformed
-        
+        placeOrder();
     }//GEN-LAST:event_placeorderButtonActionPerformed
 
 
@@ -370,5 +374,17 @@ public class OrderPanel extends javax.swing.JPanel {
         discountText.setText("");
         qtyText.setText("");
         itemdataLabel.setText("");
+    }
+
+    private void placeOrder() {
+         try {
+            OrderDto orderDto = new OrderDto(orderidText.getText(), customerText.getText(), orderDetailDtos);
+            String result = orderController.placeOrder(orderDto);
+            JOptionPane.showMessageDialog(this, result);
+        } catch (Exception ex) {
+            Logger.getLogger(OrderPanel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
     }
 }

@@ -6,6 +6,8 @@ package pos.layerd.dao;
 
 import pos.layerd.dao.customer.impl.CustomerDaoImpl;
 import pos.layerd.dao.customer.impl.ItemDaoImpl;
+import pos.layerd.dao.customer.impl.OrderDaoImpl;
+import pos.layerd.dao.customer.impl.OrderDetailDaoImpl;
 /**
  *
  * @author Harsha
@@ -27,12 +29,16 @@ public class DaoFactory {
                 return new CustomerDaoImpl();
             case ITEM:
                 return new ItemDaoImpl();
+            case ORDER:
+                return new OrderDaoImpl();
+            case ORDER_DETAIL:
+                return new OrderDetailDaoImpl();    
             default:
                 return null;
         }
     }
     public enum DaoType{
-        CUSTOMER, ITEM 
+        CUSTOMER, ITEM, ORDER, ORDER_DETAIL
     }
     
 }
